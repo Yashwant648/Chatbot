@@ -1,0 +1,27 @@
+import google.generativeai as genai
+from colorama import Fore, init
+
+init(autoreset=True)
+
+genai.configure(api_key="YOUR_API_KEY")
+
+model = genai.GenerativeModel("gemini-2.5-flash")
+chat = model.start_chat(history=[])
+
+print(Fore.CYAN + "=== Gemini AI Chatbot ===")
+print("Type 'exit' to quit.\n")
+
+while True:
+    user = input(Fore.BLUE + "You: ")
+
+    if user.lower() == "exit":
+        print(Fore.RED + "Goodbye!")
+        break
+
+    try:
+        response = chat.send_message(user)
+        print(Fore.GREEN + "Gemini:", response.text)
+        print("-" * 40)
+
+    except Exception as e:
+        print(Fore.RED + f"Error: {e}")
